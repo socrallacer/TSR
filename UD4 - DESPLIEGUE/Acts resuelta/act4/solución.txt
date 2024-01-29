@@ -1,0 +1,24 @@
+Las soluciones para cada uno de los apartados de esta actividad son:
+
+1) Véase el Dockerfile contenido en el subdirectorio "seq".
+
+2) En el subdirectorio "seq" habría que utilizar esta orden:
+    docker build -t seq .
+    
+3) docker run -d seq
+
+4) Tras haber utilizado la orden del apartado anterior, el identificador del contenedor correspondiente se habrá mostrado en pantalla. Si asumimos que ese identificador fuera, por ejemplo, ed5671da2..., la orden a proporcionar sería:
+   docker inspect ed5
+y en la parte final de la información facilitada habrá alguna línea que proporcionará la información solicitada. Normalmente, la dirección IP sería 172.17.0.2 si no tuviéramos otros contenedores en marcha en ese anfitrión. De todas formas, en esta solución hemos desarrollado un Dockerfile que no depende de esa dirección. Generaríamos la imagen correspondiente con la siguiente orden, en el subdirectorio "proc":
+   docker build -t proc .
+
+5) El enunciado no exige realizar el despliegue de manera automatizada. Manualmente, podríamos resolverlo utilizando esta secuencia de órdenes (cuya escritura es más breve que el docker-compose.yml correspondiente, aunque no se podrían reutilizar de manera general) y donde se supone que el proceso secuenciador todavía sigue en marcha en su contenedor correspondiente:
+   docker run -e SEQ_IP=172.17.0.2 -e PROC_ID=1 proc
+   docker run -e SEQ_IP=172.17.0.2 -e PROC_ID=2 proc
+   docker run -e SEQ_IP=172.17.0.2 -e PROC_ID=3 proc
+   
+6) Bastaría con haber lanzado el secuenciador con esta orden:
+   docker run -p 8888:8888 -p 9997-9999:9997-9999 seq
+   ...para después lanzar cada proceso con una línea similar a la siguiente:
+   docker run -e SEQ_IP=192.168.0.10 -e PROC_ID=x proc
+   ...donde "x" sería el valor del identificador correspondiente a ese proceso.

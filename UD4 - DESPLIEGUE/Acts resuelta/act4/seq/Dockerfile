@@ -1,0 +1,4 @@
+FROM tsr-zmq
+COPY Seq.js .
+EXPOSE 8888 9997 9998 9999
+CMD node Seq 

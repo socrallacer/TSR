@@ -1,0 +1,46 @@
+# This is the original version of the docker-compose.yml file
+# explained at the end of Unit 4.
+# It should be adequately modified in order to solve Activity 3.
+version: '2'
+services:
+  cli:
+    image: cli-a3
+    build: ./cl/
+    links:
+      - bro
+    environment:
+      - BROKER_HOST=bro
+      - BROKER_PORT=9998
+  wor-r:
+    image: wor-a3
+    build: ./wk/
+    links:
+      - bro
+    environment:
+      - BROKER_HOST=bro
+      - BROKER_PORT=9999
+      - JOB_CLASS=R
+  wor-g:
+    image: wor-a3
+    build: ./wk/
+    links:
+      - bro
+    environment:
+      - BROKER_HOST=bro
+      - BROKER_PORT=9999
+      - JOB_CLASS=G
+  wor-b:
+    image: wor-a3
+    build: ./wk/
+    links:
+      - bro
+    environment:
+      - BROKER_HOST=bro
+      - BROKER_PORT=9999
+      - JOB_CLASS=B
+  bro:
+    image: bro-a3
+    build: ./bk/
+    expose:
+      - "9998"
+      - "9999"

@@ -1,0 +1,14 @@
+version: '2'
+services:
+  publ:
+    image:  pub
+    build:  ./pub
+    expose:
+     - "8888"
+  subs:
+    image:  sub
+    build:  ./sub
+    links:
+     - publ
+    environment:
+     - PUB_URL=tcp://publ:8888
